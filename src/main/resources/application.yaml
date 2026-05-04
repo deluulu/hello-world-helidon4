@@ -9,7 +9,7 @@ db:
     # Set DB_PASSWORD env var before starting (your Supabase database password)
 
     url: "jdbc:postgresql://aws-1-eu-west-2.pooler.supabase.com:5432/postgres?sslmode=require"
-    username: "postgres.cugqrzmlyqaajsktjvsb"
+    username: "${DB_USER}"
     password: "${DB_PASSWORD}"
     init-pool-size: 2
     max-pool-size: 10
