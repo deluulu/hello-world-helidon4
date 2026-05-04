@@ -1,0 +1,37 @@
+server:
+  port: 8080
+  host: "0.0.0.0"
+
+db:
+  source: "jdbc"
+  connection:
+    # Direct connection to Supabase PostgreSQL (project: hello-world-v2)
+    # Set DB_PASSWORD env var before starting (your Supabase database password)
+
+    url: "jdbc:postgresql://aws-1-eu-west-2.pooler.supabase.com:5432/postgres?sslmode=require"
+    username: "postgres.cugqrzmlyqaajsktjvsb"
+    password: "${DB_PASSWORD}"
+    init-pool-size: 2
+    max-pool-size: 10
+    connection-timeout: 10000
+  statements:
+    select-all-profiles: >
+      SELECT id, username, full_name, avatar_url, bio, created_at, updated_at
+      FROM profiles
+      ORDER BY created_at DESC
+    get-profile-by-id: >
+      SELECT id, username, full_name, avatar_url, bio, created_at, updated_at
+      FROM profiles
+      WHERE id = ?
+    insert-profile: >
+      INSERT INTO profiles (id, username, full_name, bio)
+      VALUES (gen_random_uuid(), ?, ?, ?)
+    update-profile: >
+      UPDATE profiles
+      SET full_name    = COALESCE(?, full_name),
+          bio          = COALESCE(?, bio),
+          avatar_url   = COALESCE(?, avatar_url),
+          updated_at   = now()
+      WHERE id = ?
+    delete-profile: >
+      DELETE FROM profiles WHERE id = ?
