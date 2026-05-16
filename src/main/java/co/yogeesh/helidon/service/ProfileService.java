@@ -1,4 +1,4 @@
-package co.yogeesh.helidon;
+package co.yogeesh.helidon.service;
 
 import io.helidon.dbclient.DbClient;
 import io.helidon.dbclient.DbRow;
@@ -23,7 +23,7 @@ public class ProfileService implements HttpService {
 
     private final DbClient db;
 
-    ProfileService(DbClient db) {
+    public ProfileService(DbClient db) {
         this.db = db;
     }
 
@@ -37,7 +37,7 @@ public class ProfileService implements HttpService {
     }
 
     // GET /profiles
-    private void getAll(ServerRequest req, ServerResponse res) {
+    void getAll(ServerRequest req, ServerResponse res) {
         JsonArrayBuilder array = Json.createArrayBuilder();
         db.execute()
           .namedQuery("select-all-profiles")
@@ -46,7 +46,7 @@ public class ProfileService implements HttpService {
     }
 
     // GET /profiles/{id}
-    private void getById(ServerRequest req, ServerResponse res) {
+    void getById(ServerRequest req, ServerResponse res) {
         String id = req.path().pathParameters().get("id");
         db.execute()
           .namedGet("get-profile-by-id", id)
@@ -56,7 +56,7 @@ public class ProfileService implements HttpService {
     }
 
     // POST /profiles   body: { "id": "<auth-user-uuid>", "username": "...", "full_name": "...", "bio": "..." }
-    private void create(ServerRequest req, ServerResponse res) {
+    void create(ServerRequest req, ServerResponse res) {
         JsonObject body = req.content().as(JsonObject.class);
         String username = body.getString("username", null);
         String fullName = body.getString("full_name", null);
@@ -71,7 +71,7 @@ public class ProfileService implements HttpService {
     }
 
     // PUT /profiles/{id}   body: { "full_name": "...", "bio": "...", "avatar_url": "..." }
-    private void update(ServerRequest req, ServerResponse res) {
+    void update(ServerRequest req, ServerResponse res) {
         String id      = req.path().pathParameters().get("id");
         JsonObject body = req.content().as(JsonObject.class);
 
@@ -90,7 +90,7 @@ public class ProfileService implements HttpService {
     }
 
     // DELETE /profiles/{id}
-    private void delete(ServerRequest req, ServerResponse res) {
+    void delete(ServerRequest req, ServerResponse res) {
         String id    = req.path().pathParameters().get("id");
         long count   = db.execute().namedDelete("delete-profile", id);
 

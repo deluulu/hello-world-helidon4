@@ -1,4 +1,4 @@
-package co.yogeesh.helidon;
+package co.yogeesh.helidon.supabase;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
