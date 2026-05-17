@@ -53,6 +53,12 @@
             <artifactId>helidon-dbclient-jsonp</artifactId>
         </dependency>
 
+        <!-- Tracing -->
+        <dependency>
+            <groupId>io.helidon.tracing</groupId>
+            <artifactId>helidon-tracing</artifactId>
+        </dependency>
+
         <!-- Logging -->
         <dependency>
             <groupId>io.helidon.logging</groupId>
